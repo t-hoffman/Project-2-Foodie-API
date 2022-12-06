@@ -16,7 +16,7 @@ const Home = () => {
             const response = await fetch('./data.json');
             const data = await response.json();
                 
-                setRestaurant(data)
+            setRestaurant(data)
         } catch(err) {
             console.log(err);
         }
@@ -24,48 +24,25 @@ const Home = () => {
 
     useEffect(() => {getRestaurants();}, []);
 
-    const loaded = () => {
-        console.log(restaurant);
+    if (restaurant) {
         return (
             <section className='container'>
-            {restaurant.results.map((name) => {
+            {
+                restaurant.businesses.map((name) => {
                 return (
-                    <Link to={`/starship/${ starship.name }`} key={ starship.name }>
+                    <Link to={`/restaurant/${ name.name }`} key={ name.name }>
                         <div className="card">
                             <div className="card-title">
-                                <h3>{starship.name}</h3>
+                                <h3>{name.name}</h3>
                             </div>
                         </div>
                     </Link>
                 )
-            })}
-        </section>
-        )
-            
-   
-
-    return (
-        
-        <>Home</>
-       
-
-
-    
-    
-    
-        )
-    }
+                })
+            }
+            </section>
+        )         
+   } else { return <h1>Loading ...</h1> }
 }
-
-
-
-
-    
-
-
-fetch('./data.json')
-.then(resp => resp.json())
-.then((data) => {console.log(data)})
-.catch(err => console.error(err))
 
 export default Home;
