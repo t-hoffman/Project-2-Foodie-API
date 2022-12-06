@@ -53,8 +53,9 @@ Error Page
 
 # Component Hierarchy 
 
+<img width="1021" alt="Screenshot 2022-12-05 at 4 11 58 PM" src="https://user-images.githubusercontent.com/105845188/205774063-c407873e-8f8e-4d0b-9072-fa2ddf085be0.png">
 
-![F09DC742-9513-473D-9778-EE268601D394](https://user-images.githubusercontent.com/105845188/205768725-8cc8fe34-eb20-4377-bec2-6b5e7ebe5148.jpeg)
+
 
 
 
