@@ -31,7 +31,7 @@ Logo
 
 ![Image 12-5-22 at 3 47 PM 2](https://user-images.githubusercontent.com/105845188/205770998-9c6058f9-31bb-4990-9830-190aae00d4ab.jpg)
 
-Error PAge 
+Error Page 
 
 ![E8FAA8F8-9A72-4DC4-A8FD-B094B5BB5B71](https://user-images.githubusercontent.com/105845188/205772235-c037ad31-5a90-4cc3-a69e-6f7ca15abde1.jpeg)
 
