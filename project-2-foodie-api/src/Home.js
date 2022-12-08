@@ -15,7 +15,7 @@ const Home = () => {
         try{
             const response = await fetch('./data.json');
             const data = await response.json();
-                
+                console.log('home fetch', response)
             setRestaurant(data)
         } catch(err) {
             console.log(err);
@@ -30,7 +30,7 @@ const Home = () => {
             {
                 restaurant.businesses.map((name) => {
                 return (
-                    <Link to={`/restaurant/${ name.name }`} key={ name.name }>
+                    <Link to={`/restaurant/${ name.id }`} key={ name.id }>
                         <div className="card">
                             <div className="card-title">
                                 <h3>{name.name}</h3>
