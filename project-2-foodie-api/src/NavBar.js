@@ -14,7 +14,7 @@ function SearchResults (props) {
     async function fetchCities (cb) {
         fetch ('/Cities.json')
         .then (resp => resp.json())
-        .then (json => { cb(json) })
+        .then (json => { cb (json) })
         .catch (err => console.error('error: ', err));
     }
 
