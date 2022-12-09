@@ -82,7 +82,7 @@
 
 .search {
     position: absolute;
-    width: 500px;
+    width: 350px;
     padding: 0 15px 15px;
     background-color: #efefef;
     border-radius: 0 0 5px 5px;
@@ -110,4 +110,10 @@
   .no-results {
     text-align: center;
     display: none;
+  }
+
+  @media screen and (max-width: 1320px) {
+    .search {
+        width: 20%;
+    }
   }

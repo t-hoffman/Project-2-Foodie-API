@@ -17,8 +17,10 @@ function App() {
         <Route path="/search/:city" element={<SearchPage />} />
         <Route path="/test/:id" element={<Test />} />
         <Route path="/test/:id/:name" element={<Test />} />
-        <Route path="/test/:id/:name/:lat" element={<Test />} />
-        <Route path="/test/:id/:name/:lat/:long" element={<Test />} />
+        <Route path="/test/:id/:name/:city" element={<Test />} />
+        <Route path="/test/:id/:name/:city/:state" element={<Test />} />
+        <Route path="/test/:id/:name/:city/:state/:lat" element={<Test />} />
+        <Route path="/test/:id/:name/:city/:state/:lat/:long" element={<Test />} />
       </Routes>
       </div>
     </div>

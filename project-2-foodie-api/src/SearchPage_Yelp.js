@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 function RestaurantCard (props) {
-    const { id, name, lat, long } = props;
-    const params = `${id}/${name}/${lat}/${long}`;
+    const { id, name, city, state, lat, long, restData } = props;
+    const params = `${id}/${name}/${city}/${state}/${lat}/${long}`;
 
     return <><b><Link to={`/test/${params}`}>{name}</Link></b><br /></>
 }
@@ -16,7 +16,7 @@ function SearchPage () {
     const cityName = encodeURIComponent(params.city);
     const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
     const yelpURL = `https://api.yelp.com/v3/businesses/search?location=${cityName}&term=restaurants&sort_by=best_match&limit=20`;
-    const apiKey = 'zU4QuOhJoqNzQwtn3GOKS2hHhX2zfsEy_JQvQg4O0mI5fyPFLCr4Q3NYUwAmdm06Jtw7QPG-MxBgS7CP-gVqzcdmGid3bjR9clpCI_9xArhMljNrpd6xVjJV2XyOY3Yx';
+    const apiKey = process.env.REACT_APP_YELP_API_KEY;
 
     function fetchData (url, cb) {
         const options = {
@@ -43,16 +43,19 @@ function SearchPage () {
             <>
             <h1>{params.city}</h1>
             {
-            list.businesses.map ((rest) => {
-                if (rest.name) {
-                    // rest.coordinates.latitude.toFixed(3)
-                    return <RestaurantCard 
-                                id={rest.id}
-                                name={rest.name}
-                                lat={rest.coordinates.latitude}
-                                long={rest.coordinates.longitude} />
-                }
-            })
+                list.businesses.map ((rest) => {
+                    if (rest.name) {
+                        // rest.coordinates.latitude.toFixed(3)
+                        return <RestaurantCard 
+                                    id={rest.id}
+                                    name={rest.name}
+                                    city={rest.location.city}
+                                    state={rest.location.state}
+                                    lat={rest.coordinates.latitude}
+                                    long={rest.coordinates.longitude}
+                                    restData={rest} />
+                    }
+                })
             }
         </>
         )
