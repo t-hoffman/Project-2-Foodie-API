@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 
 const travelAPI = {
     headers: {
-        'X-RapidAPI-Key': '50260d1ca6msh1edde9c771d70abp1ffa8fjsn5929da97f103'
+        'X-RapidAPI-Key': process.env.REACT_APP_TRIP_API_KEY
     }
 };
 
@@ -15,22 +15,23 @@ function fetchData (url, options, cb) {
 }
 
 function Images (props) {
-    const { id, name, lat, long } = useParams();
+    const { id, name, city, state, lat, long } = useParams();
     const [pics, setPics] = useState(null);
     function fetchPhotos () {
         if (props.data) {
             const similarity = require ('string-similarity');
             let results = [];
             
-            props.data.data.forEach((r, i) => {
-                const resultName = r.name ? r.name.toLowerCase() : '';
+            props.data.forEach((r, i) => {
+                const resultName = (r.result_object) ? r.result_object.name.toLowerCase() : (r.name ? r.name.toLowerCase() : '');
                 results.push(resultName.toLowerCase());
             });
             if (results.length > 0) {
                 const result = similarity.findBestMatch(name.toLowerCase(), results);
-                console.log(props.data, results, result)
+                console.log(props.data, results, result);
                 if (result.bestMatch.rating > 0.4) {
-                    const resultID = props.data.data[result.bestMatchIndex].location_id;
+                    const locID = props.data[result.bestMatchIndex].location_id;
+                    const resultID = locID ? locID : props.data[result.bestMatchIndex].result_object.location_id;
                     const photoURL = `https://travel-advisor.p.rapidapi.com/photos/list?location_id=${resultID}&currency=USD&limit=50&lang=en_US`;
                     fetchData (photoURL, travelAPI, setPics);
                 } else {
@@ -43,9 +44,9 @@ function Images (props) {
     useEffect (()=> {
         fetchPhotos (props.data);
     }, [props.data])
-    
-    if (pics && pics !== 'none' && pics.data.length > 0) {console.log('hello')
-        return (<><h3>Photos ({pics.data[0].locations[0].name}):</h3>
+console.log(pics)
+    if (pics && pics !== 'none' && pics.data.length > 0) {
+        return (<><h3>Photos ({name}):</h3>
         {
             pics.data.map (pic => {
                 return <><img src={pic.images.medium.url} /></>
@@ -58,12 +59,22 @@ function Images (props) {
 }
 
 function Test () {
-    const { name, lat, long } = useParams();
+    const { name, city, state, lat, long } = useParams();
     const [data, setData] = useState(null);
     const travelURL = `https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng?latitude=${lat}&longitude=${long}&limit=30&currency=USD&distance=2&lunit=km&lang=en_US`;
-
+    const nameURL = `https://travel-advisor.p.rapidapi.com/locations/search?query=${name} ${city} ${state}&limit=30&offset=0&units=km&currency=USD&sort=restaurants&lang=en_US`;
+    
     useEffect (() => {
-        fetchData (travelURL, travelAPI, setData);
+        fetchData (travelURL, travelAPI, (coord) => {
+            fetchData (nameURL, travelAPI, (byname) => {
+                //const totalData = [...coord.data, ...byname.data];
+                const filterData = byname.data.filter ((element) => {
+                    if (element.result_type == 'restaurants') return element;
+                })
+                const totalData = [...coord.data, ...filterData];
+                setData (totalData);
+            })
+        });
     }, [useParams()]);
 
     if (data) {

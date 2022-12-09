@@ -18,7 +18,7 @@ function Test () {
 
     const apiKey = {
         headers: {
-            'X-RapidAPI-Key': '50260d1ca6msh1edde9c771d70abp1ffa8fjsn5929da97f103'
+            'X-RapidAPI-Key': process.env.REACT_APP_TRIP_API_KEY
         }
     };
 
