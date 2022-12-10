@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 // import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import "./Restaurant.css"
 
 
 const  Restaurant = () => {
@@ -29,7 +30,7 @@ const  Restaurant = () => {
     useEffect(() => {
         
         getRestaurantName();
-        console.log('r', restaurant)
+        // console.log('r', restaurant)
     }, []);
 
 
@@ -39,35 +40,60 @@ const  Restaurant = () => {
         // const { name, review_count, categories } = restaurant.businesses[id]
         return (
             <>
+             {/* object.value is keying into restaurant.business object and turning it into an array. with that array we have many businesses and what .filter is doing is it 
+                is filtering through the array, where the e.id is the business id of the business object. it is finding the url parameter id and returning the business that is = to the set id
+                when it return it is still returning a array of an ojbect so [0] is keying into that object and displaying whatever object key value.*/}
             { 
             <>
             <div className="rest-card-wrapper">
-            <img src=
+            <img id="business-img" src=
             {Object.values(restaurant.businesses).filter(e => e.id === id)[0].image_url}/>
+            
+            <div className="business-elements">
+                
+               
+            <div className="business-title">
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].name}
+            </div>
+
             <div>
-            {Object.values(restaurant.businesses).filter(e => e.id === id)[0].name}
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].price}
             </div>
             <div>
-            {Object.values(restaurant.businesses).filter(e => e.id === id)[0].price}
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].rating}
             </div>
             <div>
-            {Object.values(restaurant.businesses).filter(e => e.id === id)[0].rating}
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].review_count}
             </div>
+                
             <div>
-            {Object.values(restaurant.businesses).filter(e => e.id === id)[0].review_count}
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].categories[{}]}
+            </div>
+            
+            <div>
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].transactions}
+            </div>
+
+            <div>
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].price}
+            </div>
+
+            <div>
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].location.address1}
+            </div>
+
+            <div>
+                {Object.values(restaurant.businesses).filter(e => e.id === id)[0].phone}
+            </div>
+
             </div>
             </div>
+            
             </>
             }
-            
-                {/* <section className= "container">
-                    <div className= "restaurant-info">
-                        <div className = "name-div"> {name} </div>
-                        <div className = "review-number"> {review_count} </div>
-                        <div className = "categories">{categories} </div>
-                    </div>
 
-                </section> */}
+            
+                
             </>
         )
     } else {         

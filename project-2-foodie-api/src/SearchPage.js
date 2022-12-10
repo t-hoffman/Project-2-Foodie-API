@@ -27,6 +27,7 @@ function SearchPage () {
     }
 
     useEffect (() => {
+
         fetchData (cityURL, apiKey, (geo) => {
             const locationID = geo.data[0].result_object.location_id;
             const listURL = `https://travel-advisor.p.rapidapi.com/restaurants/list?location_id=${locationID}&currency=USD&lunit=km&limit=30&lang=en_US`;
@@ -53,6 +54,7 @@ function SearchPage () {
     } else {
         return <h1>Loading ...</h1>
     }
+
 }
 
 export default SearchPage;
