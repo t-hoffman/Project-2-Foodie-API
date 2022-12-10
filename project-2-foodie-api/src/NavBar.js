@@ -58,7 +58,7 @@ function NavBar () {
             }
             
         } else {
-            refLinks.current.style.display = 'none';
+            refLinks.current.style.display = refLinks.current.style.display ? 'none' : '';
             if (event.type === 'click') refSearch.current.style.display = 'none';
             if (event && event.type === 'keyup') {
                 const noResults = document.querySelector('.no-results');

@@ -14,8 +14,9 @@ function fetchData (url, options, cb) {
     .catch (err => console.error(err));
 }
 
-function Images (props) {
+function Images ({passData}) {
     const { id, name, city, state, lat, long } = useParams();
+    const [searchData, setSearchData] = useState(null);
     const [restaurantData, setRestaurantData] = useState(null);
     const [pics, setPics] = useState(null);
     
@@ -25,45 +26,56 @@ function Images (props) {
 
         fetchData (travelURL, travelAPI, (coord) => {
             fetchData (nameURL, travelAPI, (byname) => {
-                setRestaurantData ([...coord, ...byname]);
-            })
+                setSearchData ([...coord, ...byname]);
+            }); console.log('API_LAT/LONG/NAME_CITY_STATE')
         });
     }
-console.log('DATA: ',restaurantData)
+console.log('SEARCH DATA: ',searchData)
 
     function fetchPhotos () {
         const similarity = require ('string-similarity');
         let results = [];
         
-        restaurantData.forEach((r, i) => {
+        // searchData.forEach((r, i) => {
+        //     const resultName = r.result_object ? r.result_object.name.toLowerCase() : (r.name ? r.name.toLowerCase() : '');
+        //     if (r.result_type === 'restaurants' || !r.result_type) results.push(resultName.toLowerCase());
+        // });
+
+        const filteredData = searchData.filter ((r, i) => {
             const resultName = r.result_object ? r.result_object.name.toLowerCase() : (r.name ? r.name.toLowerCase() : '');
-            if (r.result_type === 'restaurants' || !r.result_type) results.push(resultName.toLowerCase());
-        });
+            if (r.result_type === 'restaurants' || !r.result_type) {
+                results.push(resultName.toLowerCase());
+                return r;
+            }
+        })
 
         if (results.length > 0) {
             const result = similarity.findBestMatch(name.toLowerCase(), results);
-            console.log('LIST/MATCHES: ', restaurantData, results, result);
+            console.log('LIST/MATCHES: ', filteredData, results, result);
             if (result.bestMatch.rating > 0.49) {
-                const locID = restaurantData[result.bestMatchIndex].location_id;
-                const resultID = locID ? locID : restaurantData[result.bestMatchIndex].result_object.location_id;
+                const locID = filteredData[result.bestMatchIndex].location_id;
+                const resultID = locID ? locID : filteredData[result.bestMatchIndex].result_object.location_id;
                 const photoURL = `https://travel-advisor.p.rapidapi.com/photos/list?location_id=${resultID}&currency=USD&limit=50&lang=en_US`;
-                fetchData (photoURL, travelAPI, setPics);
+                fetchData (photoURL, travelAPI, setPics); console.log('RUN_API_PICS',pics)
+                setRestaurantData (filteredData[result.bestMatchIndex]);
+                passData (filteredData[result.bestMatchIndex])
             } else {  setPics ('none'); }
         } else { setPics('none') }
     }
 
     useEffect (() => {
-        fetchRestaurantData ();
-    }, []);
+        if (!searchData) fetchRestaurantData ();
+    }, [searchData]);
     
     useEffect (()=> {
-        if (restaurantData) fetchPhotos ();
-    }, [restaurantData])
+        if (searchData) fetchPhotos ();
+    }, [searchData])
 
-console.log('PICS: ',pics)
+//console.log('PICS: ',pics)
+//console.log('R/DATA:', restaurantData)
 
     if (pics && pics !== 'none' && pics.length > 0) {
-        return (<><h3>Photos ({pics[0].locations[0].name}):</h3>
+        return (<><h3>Photos ({restaurantData.name ? restaurantData.name : restaurantData.result_object.name}):</h3>
         {
             pics.map (pic => {
                 return <><img src={pic.images.medium.url} /></>
@@ -77,10 +89,16 @@ console.log('PICS: ',pics)
 
 function Test () {
     const { name, city, state, lat, long } = useParams();
+    const [data, setData] = useState(null);
 
-        return (<><h1>{name}</h1>
-        <Images />
-        </>)
+    function passData (data) {
+        setData(data);
+    }
+    
+    console.log(data)
+    return (<><h1>{name}</h1>
+    <Images passData={passData} />
+    </>)
 
 }
 
