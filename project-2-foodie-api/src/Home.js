@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Carousel from "./carousel.js";
 const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
 const LA_URL = 'https://api.yelp.com/v3/businesses/search?location=los%20angeles%2C%20ca&term=restaurants&sort_by=best_match&limit=20';
-const apiKey = 'zU4QuOhJoqNzQwtn3GOKS2hHhX2zfsEy_JQvQg4O0mI5fyPFLCr4Q3NYUwAmdm06Jtw7QPG-MxBgS7CP-gVqzcdmGid3bjR9clpCI_9xArhMljNrpd6xVjJV2XyOY3Yx';
+const apiKey = process.env.REACT_APP_YELP_API_KEY;
 
 
 const options = {
