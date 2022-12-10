@@ -2,8 +2,8 @@ import './App.css';
 import Home from './Home';
 import Restaurant from './Restaurant';
 import NavBar from './NavBar';
-import SearchPage from './SearchPage';
-import Test from './test';
+import SearchPage from './SearchPage_Yelp';
+import Test from './test_yelp';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -15,7 +15,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/restaurant/:id" element={<Restaurant />} />
         <Route path="/search/:city" element={<SearchPage />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/test/:id" element={<Test />} />
+        <Route path="/test/:id/:name" element={<Test />} />
+        <Route path="/test/:id/:name/:city" element={<Test />} />
+        <Route path="/test/:id/:name/:city/:state" element={<Test />} />
+        <Route path="/test/:id/:name/:city/:state/:lat" element={<Test />} />
+        <Route path="/test/:id/:name/:city/:state/:lat/:long" element={<Test />} />
       </Routes>
       </div>
     </div>
