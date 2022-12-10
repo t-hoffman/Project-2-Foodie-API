@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const travelAPI = {
     headers: {
@@ -14,12 +14,12 @@ function fetchData (url, options, cb) {
     .catch (err => console.error(err));
 }
 
-function Images (props) {
-    const { id, name, city, state, lat, long } = useParams();
+function FetchRestaurantData () {
     const [restaurantData, setRestaurantData] = useState(null);
-    const [pics, setPics] = useState(null);
-    
-    function fetchRestaurantData () {
+    const [restaurant, setRestaurant] = useState (null);
+    const { id, name, city, state, lat, long } = useParams();
+
+    useEffect (() => {
         const travelURL = `https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng?latitude=${lat}&longitude=${long}&limit=30&currency=USD&distance=2&lunit=km&lang=en_US`;
         const nameURL = `https://travel-advisor.p.rapidapi.com/locations/search?query=${name} ${city} ${state}&limit=30&offset=0&units=km&currency=USD&sort=restaurants&lang=en_US`;
 
@@ -28,10 +28,9 @@ function Images (props) {
                 setRestaurantData ([...coord, ...byname]);
             })
         });
-    }
-console.log('DATA: ',restaurantData)
+    }, []);
 
-    function fetchPhotos () {
+    useEffect (() => {
         const similarity = require ('string-similarity');
         let results = [];
         
@@ -47,41 +46,14 @@ console.log('DATA: ',restaurantData)
                 const locID = restaurantData[result.bestMatchIndex].location_id;
                 const resultID = locID ? locID : restaurantData[result.bestMatchIndex].result_object.location_id;
                 const photoURL = `https://travel-advisor.p.rapidapi.com/photos/list?location_id=${resultID}&currency=USD&limit=50&lang=en_US`;
-                fetchData (photoURL, travelAPI, setPics);
-            } else {  setPics ('none'); }
-        } else { setPics('none') }
-    }
-
-    useEffect (() => {
-        fetchRestaurantData ();
-    }, []);
-    
-    useEffect (()=> {
-        if (restaurantData) fetchPhotos ();
-    }, [restaurantData])
-
-console.log('PICS: ',pics)
-
-    if (pics && pics !== 'none' && pics.length > 0) {
-        return (<><h3>Photos ({pics[0].locations[0].name}):</h3>
-        {
-            pics.map (pic => {
-                return <><img src={pic.images.medium.url} /></>
-            })
-        }
-        </>)
-    } else {
-        return pics && pics === 'none' || pics ? <h3>Sorry, no results for photos.</h3> : <h3>Loading ...</h3>
-    }
+                fetchData (photoURL, travelAPI, setRestaurant);
+            } else {  setRestaurant ('none'); }
+        } else { setRestaurant('none') }
+    }, [restaurantData]);
 }
 
-function Test () {
-    const { name, city, state, lat, long } = useParams();
-
-        return (<><h1>{name}</h1>
-        <Images />
-        </>)
-
+function Component () {
+    return <>Hello World!</>
 }
 
-export default Test;
+export default Component;
