@@ -4,6 +4,8 @@ import Restaurant from './Restaurant';
 import NavBar from './NavBar';
 import SearchPage from './SearchPage_Yelp';
 import Test from './test_yelp';
+import Carousel from './testcarousel';
+import Component from './Component';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Route path="/test/:id/:name/:city/:state" element={<Test />} />
         <Route path="/test/:id/:name/:city/:state/:lat" element={<Test />} />
         <Route path="/test/:id/:name/:city/:state/:lat/:long" element={<Test />} />
+        <Route path="/car" element={<Carousel />} />
+        <Route path="/component" element={<Component />} />
       </Routes>
       </div>
     </div>

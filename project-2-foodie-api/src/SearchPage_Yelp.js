@@ -6,7 +6,16 @@ function RestaurantCard (props) {
     const { id, name, city, state, lat, long, restData } = props;
     const params = `${id}/${name}/${city}/${state}/${lat}/${long}`;
 
-    return <><b><Link to={`/test/${params}`}>{name}</Link></b><br /></>
+    return (
+            <div className="rest-card">
+                <div><img src={restData.image_url} width="125px" style={{borderRadius: '5px'}} /></div>
+                <div className="rest-card container">
+                    <div style={{width: '100%'}}><h3><Link to={`/test/${params}`}>{name}</Link></h3></div>
+                    <div style={{width: '100%'}}>{restData.location.address1} {restData.location.city}, {restData.location.state}</div>
+                    <div style={{width: '100%'}}>{restData.price} {restData.display_phone}</div>
+                </div>
+            </div>
+    )
 }
 
 function SearchPage () {

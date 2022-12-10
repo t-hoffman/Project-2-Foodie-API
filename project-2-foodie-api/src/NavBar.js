@@ -24,10 +24,10 @@ function SearchResults (props) {
     
     if (data) {
         let count = 0;
-
         return Object.keys(data).map((state) => {
             return data[state].filter ((q) => {
                 if (q.toLowerCase().includes(query.toLowerCase()) && query && count < parseInt(props.count)) {
+                    count++;
                     return q;
                 }
             }).map (i => {
@@ -41,30 +41,45 @@ function NavBar () {
     const refLinks = useRef(null);
     const refSearch = useRef(null);
     const [query, setQuery] = useState('');
-    
-    function toggleLinks (event) {
-        if (event && event !== 'search' && event !== 'none' && event.target.id === 'icon') {
+
+    function toggleView (event) {
+        const searchInput = document.querySelector('#search').value;
+        
+        if (event !== 'search' && event !== 'none' && event.target.id === 'icon') {
             const linkDisplay = refLinks.current.style.display;
             refLinks.current.style.display = linkDisplay === 'block' ? 'none' : 'block';
-        } else if (event && event !== 'search' && event.target.id !== 'icon') {
-            refLinks.current.style.display = 'none';
-            refSearch.current.style.display = 'none';
         } else if (event === 'search') {
-            refSearch.current.style.display = 'block';
-            const noResults = document.querySelector('.no-results');
-            const results = refSearch.current.children.length;
+            const searchInput = document.querySelector('#search').value;
 
-            if (results <= 1 && query.length > 0) {
-                noResults.style.display = 'block';
-            } else if (results > 1) {
-                noResults.style.display = 'none';
+            if (searchInput === '') {
+                refSearch.current.style.display = 'none';
+            } else {
+                refSearch.current.style.display = 'block';
             }
+            
+        } else {
+            refLinks.current.style.display = 'none';
+            if (event.type === 'click') refSearch.current.style.display = 'none';
+            if (event && event.type === 'keyup') {
+                const noResults = document.querySelector('.no-results');
+                const results = refSearch.current.children.length;
+
+                if (results <= 1 && searchInput.length > 0) {
+                    noResults.style.display = 'block';
+                } else if (results > 1) {
+                    noResults.style.display = 'none';
+                }
+            }
+
+            if (event.key === 'Enter') alert('hi')
         }
     }
     
     useEffect (() => {
-        document.addEventListener('click', toggleLinks);
-        document.querySelector('.icon').addEventListener('click', () => toggleLinks());
+        document.addEventListener('click', (e) => toggleView(e));
+        document.addEventListener('keyup', (e) => toggleView(e));
+        const logo = document.querySelector('.logo');
+        logo.addEventListener('click', () => { window.location = '/'; })
     }, []);
 
     return (
@@ -78,9 +93,10 @@ function NavBar () {
                         <input 
                             type="text" 
                             placeholder="search ..."
-                            onChange={(e) => { setQuery(e.target.value); toggleLinks('search'); }}
+                            onChange={(e) => { setQuery(e.target.value); toggleView('search'); }}
                             value={query}
-                            id="search" />
+                            id="search"
+                            autoComplete="off" />
                         <i className="fa fa-bars icon" id="icon" ></i>
                     </div>
                 </div>
