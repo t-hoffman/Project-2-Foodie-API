@@ -26,17 +26,17 @@ function SearchPage () {
         // })
     }, []);
 
-    return (
-        <h1>{params.city}</h1>
-        if (list) {
-            console.log(list)
-            if (list) {
-                return list.data.map ((rest) => {
-                    return <div>{rest.name}</div>
-                })
-            }
-        }
-    )
+    // return (
+    //     <h1>{params.city}</h1>
+    //     if (list) {
+    //         console.log(list)
+    //         if (list) {
+    //             return list.data.map ((rest) => {
+    //                 return <div>{rest.name}</div>
+    //             })
+    //         }
+    //     }
+    // )
 }
 
 export default SearchPage;
