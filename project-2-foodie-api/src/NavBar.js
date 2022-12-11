@@ -37,6 +37,46 @@ function SearchResults (props) {
     }
 }
 
+// Yelp Autocomplete or live restaurant search in Los Angeles, CA
+// function SearchResults (props) {
+//     const { query } = props;
+//     const [data, setData] = useState(null);
+
+//     const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
+//     const apiKey = process.env.REACT_APP_YELP_API_KEY;
+
+//     function fetchAutocomplete (url, cb) {
+//         const options = {
+//             method: 'GET',
+//             headers: {
+//                 'Target-URL': url, // Yelp API URL
+//                 'Authorization': 'Bearer ' + apiKey,
+//             }
+//         };
+        
+//         fetch (proxyURL, options)
+//         .then (resp => resp.json())
+//         .then (json => cb (json))
+//         .catch (err => console.log(err));
+//     }
+
+//     useEffect (() => {
+//         if (query) {
+//             //const url = `https://api.yelp.com/v3/autocomplete?text=${query}`;
+//             const url = `https://api.yelp.com/v3/businesses/search?location=Los%20Angeles,%20CA&term=${encodeURIComponent(query)}&categories=bar%2Crestaurant%2Cfood%2Crestaurants&locale=en_US&sort_by=best_match&limit=20`;
+//             fetchAutocomplete(url, setData);
+//             console.log(data)
+//         }
+//     }, [query]);
+
+//     if (data) {
+//         return data.businesses.map (item => {
+//             return <div>{item.name}</div>
+//         });
+        
+//     }
+// }
+
 function NavBar () {
     const refLinks = useRef(null);
     const refSearch = useRef(null);
@@ -56,7 +96,6 @@ function NavBar () {
             } else {
                 refSearch.current.style.display = 'block';
             }
-            
         } else {
             refLinks.current.style.display = refLinks.current.style.display ? 'none' : '';
             if (event.type === 'click') refSearch.current.style.display = 'none';
@@ -84,7 +123,7 @@ function NavBar () {
 
     return (
         <>
-        <div className="navbar">
+        <div className="foodie-navbar">
             <div className="logo">
                 <Link to="/">foodie</Link></div>
             <div className="nav-search-container">

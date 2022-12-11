@@ -14,7 +14,7 @@ h1, h2, h3 {
     font-family: 'Castoro', serif;
 }
 
-a {
+a, a:hover {
     color: indianred;
     text-decoration: underline;
 }
@@ -24,7 +24,12 @@ a {
     color: white;
 }
 
-.container {
+.body {
+    background-color: #efefef;
+    margin-bottom: 50px;
+}
+
+.foodie-container {
     width: 60%;
     height: 100%;
     margin: 0 auto;
@@ -54,4 +59,11 @@ a {
 
 .content {
     padding: 2em;
+}
+
+.carousel {
+    text-align: center;
+    background-color: #efefef;
+    border-radius: 10px;
+    padding: 5px;
 }
