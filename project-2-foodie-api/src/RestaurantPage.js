@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
+import FetchRestaurantData from './FetchRestaurantData';
 
 const travelAPI = {
     headers: {
@@ -15,65 +16,40 @@ function fetchData (url, options, cb) {
     .catch (err => console.error(err));
 }
 
-function PhotoCarousel ({passData}) {
-    const { id, name, city, state, lat, long } = useParams();
-    const [searchData, setSearchData] = useState(null);
-    const [restaurantData, setRestaurantData] = useState(null);
+function fetchYelpData (url, cb) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Target-URL': url, // Yelp API URL
+            'Authorization': 'Bearer ' + process.env.REACT_APP_YELP_API_KEY,
+        }
+    };
+
+    fetch ('https://thoffman-corsproxy.herokuapp.com/', options)
+    .then (resp => resp.json())
+    .then (json => cb (json))
+    .catch (err => console.error(err));
+}
+
+function PhotoCarousel (props) {
     const [pics, setPics] = useState(null);
+    const restaurantData = props.data;
     
-    function fetchRestaurantData () {
-        const travelURL = `https://travel-advisor.p.rapidapi.com/restaurants/list-by-latlng?latitude=${lat}&longitude=${long}&limit=30&currency=USD&distance=2&lunit=km&lang=en_US`;
-        const nameURL = `https://travel-advisor.p.rapidapi.com/locations/search?query=${name} ${city} ${state}&limit=30&offset=0&units=km&currency=USD&sort=restaurants&lang=en_US`;
-
-        fetchData (travelURL, travelAPI, (coord) => {
-            fetchData (nameURL, travelAPI, (byname) => {
-                setSearchData ([...coord, ...byname]);
-            }); console.log('API_LAT/LONG/NAME_CITY_STATE')
-        });
-    }
-console.log('SEARCH DATA: ',searchData)
-
-    function fetchPhotos () {
-        const similarity = require ('string-similarity');
-        let results = [];
-        
-        // searchData.forEach((r, i) => {
-        //     const resultName = r.result_object ? r.result_object.name.toLowerCase() : (r.name ? r.name.toLowerCase() : '');
-        //     if (r.result_type === 'restaurants' || !r.result_type) results.push(resultName.toLowerCase());
-        // });
-
-        const filteredData = searchData.filter ((r, i) => {
-            const resultName = r.result_object ? r.result_object.name.toLowerCase() : (r.name ? r.name.toLowerCase() : '');
-            if (r.result_type === 'restaurants' || !r.result_type) {
-                results.push(resultName.toLowerCase());
-                return r;
-            }
-        })
-
-        if (results.length > 0) {
-            const result = similarity.findBestMatch(name.toLowerCase(), results);
-            console.log('LIST/MATCHES: ', filteredData, results, result);
-            if (result.bestMatch.rating > 0.49) {
-                const locID = filteredData[result.bestMatchIndex].location_id;
-                const resultID = locID ? locID : filteredData[result.bestMatchIndex].result_object.location_id;
-                const photoURL = `https://travel-advisor.p.rapidapi.com/photos/list?location_id=${resultID}&currency=USD&limit=50&lang=en_US`;
-                fetchData (photoURL, travelAPI, setPics); console.log('RUN_API_PICS',pics)
-                setRestaurantData (filteredData[result.bestMatchIndex]);
-                passData (filteredData[result.bestMatchIndex])
-            } else {  setPics ('none'); }
-        } else { setPics('none') }
+    function fetchPhotos(restaurant) {
+        if (!pics) {
+            const locID = restaurant.location_id;
+            const resultID = locID ? locID : restaurant.result_object.location_id;
+            const photoURL = `https://travel-advisor.p.rapidapi.com/photos/list?location_id=${resultID}&currency=USD&limit=50&lang=en_US`;
+            fetchData (photoURL, travelAPI, setPics); console.log('RUN_API_PICS',pics)
+        }
     }
 
-    useEffect (() => {
-        if (!searchData) fetchRestaurantData ();
-    }, [searchData]);
-    
-    useEffect (()=> {
-        if (searchData) fetchPhotos ();
-    }, [searchData])
-
-//console.log('PICS: ',pics)
-//console.log('R/DATA:', restaurantData)
+    if (restaurantData && restaurantData !== 'none') {
+        fetchPhotos(props.data)
+    }
+    // } else if (restaurantData === 'none') {
+    //     return <h2>Sorry, no photo results.</h2>
+    // }
 
     if (pics && pics !== 'none' && pics.length > 0) {
         return (<><h3>Photos ({restaurantData.name ? restaurantData.name : restaurantData.result_object.name} - {pics.length}):</h3>
@@ -92,24 +68,32 @@ console.log('SEARCH DATA: ',searchData)
         }
         </>)
     } else {
-        return pics && pics === 'none' || pics ? <h3>Sorry, no results for photos.</h3> : <h3>Loading ...</h3>
+        return pics && pics === 'none' || pics ? <h3>Sorry, no results for photos.</h3> : <h3>Loading photos ...</h3>
     }
 }
 
 function RestaurantPage () {
-    const { name, city, state, lat, long } = useParams();
+    const { id, name, city, state, lat, long } = useParams();
     const [data, setData] = useState(null);
+    const [yelpData, setYelpData] = useState(null);
+    const params = useParams();
 
-    function passData (data) {
-        setData(data);
-    }
-    
-    console.log(data)
+    const options = {...params, passData: (info) => setData(info)};
+
+    FetchRestaurantData (options);
+
+    useEffect(() => {
+        const yelpURL = `https://api.yelp.com/v3/businesses/${id}`;
+        fetchYelpData(yelpURL, setYelpData);console.log('RUN_API_YELP')
+    }, []);
+
+    console.log(yelpData);
+
     return (
     <>
         <h1>{name}</h1>
         
-        <PhotoCarousel passData={passData} />
+        <PhotoCarousel data={data} />
     </>)
 
 }
