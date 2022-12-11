@@ -96,7 +96,7 @@ console.log('SEARCH DATA: ',searchData)
     }
 }
 
-function Test () {
+function RestaurantPage () {
     const { name, city, state, lat, long } = useParams();
     const [data, setData] = useState(null);
 
@@ -114,4 +114,4 @@ function Test () {
 
 }
 
-export default Test;
+export default RestaurantPage;

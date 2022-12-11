@@ -29,3 +29,41 @@
     color: #03c07b;
     text-decoration: none;
 }
+
+.filter-search {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 5px;
+    /* border-radius: 5px;
+    background-color: #f5f5f5; */
+    font-family: 'Merriweather', serif;
+    font-size: 10pt;
+}
+
+.filter-search div {
+    padding: 5px 0px 5px 5px;
+}
+
+.filter-search input {
+    width: 250px;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-family: 'Merriweather', serif;
+    font-size: 10pt;
+    box-shadow: 0px 0px 10px rgb(81, 81, 81, .2);
+}
+
+.filter-search button {
+    background-color: indianred;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Merriweather', serif;
+    font-weight: 900;
+    font-style: italic;
+    padding: 5px 10px;
+}
