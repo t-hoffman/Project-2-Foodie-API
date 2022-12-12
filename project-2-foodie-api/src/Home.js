@@ -34,9 +34,7 @@ const Home = () => {
         try{
             const response = await fetch(proxyURL, options);
             const data = await response.json();
-                console.log('home fetch', response)
             setRestaurant(data)
-            console.log("set" , setRestaurant(data))
         } catch(err) {
             console.log(err);
         }
@@ -45,7 +43,6 @@ const Home = () => {
     useEffect(() => {getRestaurants();}, []);
 
     if (restaurant) {
-        console.log("save" ,restaurant )
         return (
             <div className="home-card-wrapper">
 
