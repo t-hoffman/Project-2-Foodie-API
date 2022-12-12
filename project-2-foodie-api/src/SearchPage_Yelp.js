@@ -45,33 +45,14 @@ function SearchPage () {
 
     useEffect (() => {
         fetchData (yelpURL, setList)
-        console.log('API_RUN_INITIAL');
     }, [params]);
 
     useEffect (() => {
         if (query) {
             const filterURL = `https://api.yelp.com/v3/businesses/search?location=${encodeURIComponent(params.city)}&term=${encodeURIComponent(query)}&categories=bar%2Crestaurant%2Cfood%2Crestaurants&locale=en_US&sort_by=best_match&limit=20`;
             fetchData (filterURL, setList);
-            console.log('API_RUN_QUERY:',list)
         }
     }, [query]);
-
-    // const debounce = (func, wait, immediate) => {
-    //     let timeout
-        
-    //     return function() {
-    //         const context = this, args = arguments
-    //         const later = function() {
-    //         timeout = null
-    //         if (!immediate) func.apply(context, args)
-    //         }
-        
-    //         const callNow = immediate && !timeout
-    //         clearTimeout(timeout)
-    //         timeout = setTimeout(later, wait)
-    //         if (callNow) func.apply(context, args)
-    //     }
-    // }
 
     const debounce = (func, timeout = 400) => {
         let timer;
@@ -87,8 +68,7 @@ function SearchPage () {
       
       const processChanges = debounce((e) => saveInput(e));
 
-    if (list) {console.log(list.businesses.length)
-        console.log(list)
+    if (list) {
         return (
             <>
             <h1>{params.city}</h1>
@@ -103,7 +83,7 @@ function SearchPage () {
                             type="text"
                             id="filter"
                             autoComplete="off"
-                            onChange={(e) => { processChanges(e) /*setQuery(e.target.value)*/ }}
+                            onChange={(e) => { processChanges(e) }}
                         />
                         <div style={{paddingLeft: '10px'}}><button>></button></div>
                         </div>
@@ -114,7 +94,6 @@ function SearchPage () {
             {
                 list && list.businesses.length > 0 ? list.businesses.map ((rest) => {
                     if (rest.name) {
-                        // rest.coordinates.latitude.toFixed(3)
                         return <RestaurantCard 
                                     id={rest.id}
                                     name={rest.name}
