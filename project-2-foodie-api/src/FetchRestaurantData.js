@@ -28,7 +28,6 @@ function FetchRestaurantData (props) {
                     setSearchData ([...coord, ...byname]);
                 })
             });
-            console.log('RUN_API_FETCH_LAT/LONG_CITY/STATE/NAME');
         }
     }, [searchData]);
 
