@@ -1,0 +1,17 @@
+.title-container {
+    display: flex;
+}
+.title-container h1 {
+    margin-bottom: -5px;
+    padding: 0px;
+}
+.title-container span {
+    color: rgba(0, 0, 0, .7);
+    padding-left: 5px;
+}
+.title-container img {
+    border-radius: 10px;
+}
+.categories {
+    margin: auto 0;
+}
