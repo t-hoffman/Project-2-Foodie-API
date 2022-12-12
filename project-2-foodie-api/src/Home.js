@@ -6,10 +6,6 @@ import { useState, useEffect } from "react";
 
 import { Link } from 'react-router-dom';
 
-import Carousel from "react-bootstrap/Carousel";
-
-import data from "bootstrap/js/dist/dom/data";
-
 const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
 
 const LA_URL = 'https://api.yelp.com/v3/businesses/search?location=los%20angeles&attributes=hot_and_new&sort_by=best_match&limit=20';

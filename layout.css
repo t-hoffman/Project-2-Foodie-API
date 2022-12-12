@@ -10,6 +10,10 @@ html, body {
     font-family: 'Sawarabi Gothic', sans-serif;
 }
 
+.body {
+    background-color: #efefef;
+}
+
 h1, h2, h3 {
     font-family: 'Castoro', serif;
 }
@@ -24,15 +28,17 @@ a {
     color: white;
 }
 
-.container {
+.foodie-container {
     width: 60%;
+    max-width: 900px;
     height: 100%;
+    padding: 0px;
     margin: 0 auto;
     background-color: white;
     border-radius: 0 0 10px 10px;
 }
 
-.navbar {
+.foodie-navbar {
     display: flex;
     width: 100%;
     background-color: #efefef;
@@ -129,4 +135,24 @@ a {
 
 .content {
     padding: 2em;
+}
+
+.review-container {
+    width: 100%;
+}
+.review-title {
+    display: flex;
+    font-family: 'Merriweather', serif;
+}
+.user-info {
+    padding: 5px 0 0 10px;
+    text-align: center;
+}
+.review-content {
+    padding: 10px;
+}
+.review-content h4 {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
 }
