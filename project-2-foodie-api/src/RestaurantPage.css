@@ -15,3 +15,35 @@
 .categories {
     margin: auto 0;
 }
+.review-container {
+    width: 100%;
+}
+.review-title {
+    display: flex;
+    font-family: 'Merriweather', serif;
+}
+.user-info {
+    padding: 5px 0 0 10px;
+}
+.review-content {
+    padding: 10px;
+}
+.review-content h4 {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+}
+.review-header {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    margin: 20px 0;
+}
+
+.avatar {
+    width: 75px;
+    height: 100px;
+    border-radius: 10px;
+    background-size: cover;
+    opacity: 70%;
+}
