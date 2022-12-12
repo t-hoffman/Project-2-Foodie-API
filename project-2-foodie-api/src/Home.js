@@ -1,11 +1,19 @@
 import "./Home.css";
+
 import React from "react"
+
 import { useState, useEffect } from "react";
-// import { useParams } from "react-router";
+
 import { Link } from 'react-router-dom';
-import Carousel from "./carousel.js";
+
+import Carousel from "react-bootstrap/Carousel";
+
+import data from "bootstrap/js/dist/dom/data";
+
 const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
-const LA_URL = 'https://api.yelp.com/v3/businesses/search?location=los%20angeles%2C%20ca&term=restaurants&sort_by=best_match&limit=20';
+
+const LA_URL = 'https://api.yelp.com/v3/businesses/search?location=los%20angeles&attributes=hot_and_new&sort_by=best_match&limit=20';
+
 const apiKey = process.env.REACT_APP_YELP_API_KEY;
 
 
@@ -15,10 +23,8 @@ const options = {
         'Target-URL': LA_URL, // Yelp API URL
         'Authorization': 'Bearer ' + apiKey,
     }
-};
-
-
-
+  };
+  
 
 
 const Home = () => {
@@ -32,6 +38,7 @@ const Home = () => {
             const data = await response.json();
                 console.log('home fetch', response)
             setRestaurant(data)
+            console.log("set" , setRestaurant(data))
         } catch(err) {
             console.log(err);
         }
@@ -40,23 +47,42 @@ const Home = () => {
     useEffect(() => {getRestaurants();}, []);
 
     if (restaurant) {
+        console.log("save" ,restaurant )
         return (
             <div className="home-card-wrapper">
-                {/* <Carousel/> */}
+
+                <h1 id="hot-new-label"> Hot and New! </h1>
+                <h3 id="hot-new"> These are some of the hottest and newest restaurants we recommend in Los Angeles </h3>
+                
+                <Carousel interval={null}>
+
             {
-                restaurant.businesses.map((name) => {
+
+               
+                restaurant.businesses.map((rest) => {
                 return (
-                    <Link to={`/restaurant/${ name.id }`} key={ name.id }>
-                        <div className="card">
-                            <div className="card-title">
-                                <h3>{name.name}</h3>
-                            </div>
-                        </div>
-                    </Link>
+                   
+                          
+                           
+                         
+                            <Carousel.Item>
+                            <img src={rest.image_url} width="100%" />
+                      
+                              <Carousel.Caption>
+                                <h3 id= "rest-link"><Link to={`/restaurantpage/${rest.id}/${rest.name}/${rest.location.city}/${rest.location.state}/${rest.coordinates.latitude}/${rest.coordinates.longitude}`}> {rest.name} </Link></h3>
+                                
+                              </Carousel.Caption>
+                            </Carousel.Item>
+                          
+                        );
+                      }
                 )
-                })
-            }
+                }
+            
+            </Carousel>
+
             </div>
+    
         )         
    } else { return <h1>Loading ...</h1> }
 }
