@@ -1,9 +1,8 @@
 import './App.css';
 import Home from './Home';
 import NavBar from './NavBar';
-import SearchPage from './SearchPage_Yelp';
+import SearchPage from './SearchPage';
 import RestaurantPage from './RestaurantPage';
-import Component from './Component';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
