@@ -12,8 +12,15 @@
 .title-container img {
     border-radius: 10px;
 }
-.categories {
+.review-info {
+    display: flex;
+}
+.categories-right {
     margin: auto 0;
+}
+.categories-under {
+    display: none;
+    padding-top: 15px;
 }
 .review-container {
     width: 100%;
@@ -46,4 +53,18 @@
     border-radius: 10px;
     background-size: cover;
     opacity: 70%;
+}
+
+@media screen and (max-width: 900px) {
+    .categories-right {
+        display: none;
+    }
+
+    .categories-under {
+        display: block;
+    }
+
+    .title-container img {
+        width: 75px;
+    }
 }

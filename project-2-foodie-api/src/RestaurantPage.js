@@ -188,20 +188,21 @@ function RestaurantPage () {
     return (
     <>
         <div className="title-container">
-            <div><img src={yelpData.image_url} width="125px" /></div>
+            <div><img src={yelpData.image_url} width="125px"/></div>
             <div style={{paddingLeft: '10px', width:'100%'}}><h1>{name}</h1>
             <span>Phone: {yelpData.display_phone}</span><br />
             <span>{yelpData.location.display_address[0]}</span><br /><span>{yelpData.location.display_address[1]}</span><br />
             <span style={{fontFamily: "'Merriweather', sans-serif"}}><b>Price: <span style={{color:'indianred'}}>{yelpData.price}</span></b></span></div>
-            <div className="categories">{categories}</div>
+            <div className="categories-right">{categories}</div>
         </div>
-        <div className="title-container" style={{marginTop:'15px'}}>
+        <div className="review-info" style={{marginTop:'15px'}}>
             <div style={{textAlign:'right', fontSize:'16pt'}}><sub style={{color:'#EF0B12'}}>yelp<img src="https://logos-world.net/wp-content/uploads/2020/12/Yelp-Logo.png" height="15px" /></sub><br />
             <sub style={{color:'#32DFA2'}}>tripadvisor <img src="https://w7.pngwing.com/pngs/70/397/png-transparent-tripadvisor-logo-hotel-hotel-miscellaneous-beach-logo-thumbnail.png" height="20px" /></sub>
             </div>
             <div style={{padding:'12px 0 0 10px'}}>{yelpData.rating}<br /> <p style={{paddingTop:'5px'}}>{data.rating}</p></div>
             {tripRatingInfo}
         </div>
+        <div className="categories-under">{categories}</div>
         <div style={{paddingTop:'15px'}}>
             {data.description}
         </div>
