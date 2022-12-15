@@ -21,6 +21,7 @@
 .categories-under {
     display: none;
     padding-top: 15px;
+
 }
 .review-container {
     width: 100%;
@@ -66,5 +67,10 @@
 
     .title-container img {
         width: 75px;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 75px;
     }
 }

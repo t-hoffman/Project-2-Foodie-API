@@ -26,7 +26,7 @@ function fetchYelpData (url, cb) {
         }
     };
 
-    fetch ('https://thoffman-corsproxy.herokuapp.com/', options)
+    fetch ('https://us-central1-cors-proxy-ebc24.cloudfunctions.net/app', options)
     .then (resp => resp.json())
     .then (json => cb (json))
     .catch (err => console.error(err));

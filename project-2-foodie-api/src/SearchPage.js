@@ -24,7 +24,7 @@ function SearchPage () {
 
     const params = useParams();
     const cityName = encodeURIComponent(params.city);
-    const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
+    const proxyURL = 'https://us-central1-cors-proxy-ebc24.cloudfunctions.net/app';
     const yelpURL = `https://api.yelp.com/v3/businesses/search?location=${cityName}&term=restaurants&sort_by=best_match&limit=20`;
     const apiKey = process.env.REACT_APP_YELP_API_KEY;
 
