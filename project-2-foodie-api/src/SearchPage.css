@@ -67,3 +67,12 @@
     font-style: italic;
     padding: 5px 10px;
 }
+
+@media screen and (max-width: 900px) {
+    .filter-search input {
+        width: 175px;
+    }
+    .rest-card img {
+        width: 75px;
+    }
+}

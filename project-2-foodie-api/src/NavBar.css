@@ -113,8 +113,30 @@
     font-family: 'Castoro', serif;
   }
 
-  @media screen and (max-width: 1320px) {
+@media screen and (max-width: 1320px) {
     .search {
         width: 20%;
     }
   }
+
+@media screen and (max-width: 900px) {
+    .logo {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        border-radius: 0px;
+    }
+
+    .foodie-navbar {
+        flex-direction: column;
+    }
+
+    .nav-links {
+        width: 40%
+    }
+
+    .search {
+        left: 10%;
+        width: 80%;
+    }
+}

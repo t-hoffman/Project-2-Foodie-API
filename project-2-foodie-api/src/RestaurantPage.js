@@ -26,7 +26,7 @@ function fetchYelpData (url, cb) {
         }
     };
 
-    fetch ('https://thoffman-corsproxy.herokuapp.com/', options)
+    fetch ('https://us-central1-cors-proxy-ebc24.cloudfunctions.net/app', options)
     .then (resp => resp.json())
     .then (json => cb (json))
     .catch (err => console.error(err));
@@ -44,7 +44,7 @@ function PhotoCarousel (props) {
             fetchData (photoURL, travelAPI, (picData) => {
                 if (picData.length > 0) setPics(picData);
                 if (picData.length < 1) setPics('none');
-            }); console.log('RUN_API_PICS')
+            });
         }
     }
 
@@ -85,11 +85,11 @@ function Reviews (props) {
     }
 
     useEffect(() => {
-        if (props.tripData && !tripRev) {console.log('API_RUN_TRIP_REV')
+        if (props.tripData && !tripRev) {
             const tripURL = `https://travel-advisor.p.rapidapi.com/reviews/list?location_id=${props.tripData.location_id}&limit=20&currency=USD&lang=en_US`;
             fetchData(tripURL, travelAPI, setTripRev);
         }
-    }, [tripRev]);
+    }, []);
 
     function tripReviews() {
         if (tripRev) {
@@ -174,7 +174,6 @@ function RestaurantPage () {
     useEffect(() => {
         const yelpURL = `https://api.yelp.com/v3/businesses/${id}`;
         fetchYelpData(yelpURL, setYelpData);
-        console.log('RUN_API_YELP')
     }, []);
 
     if (yelpData && data) {

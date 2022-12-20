@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 
 import { Link } from 'react-router-dom';
 
+import Carousel from "react-bootstrap/Carousel"
+
 const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
 
 const LA_URL = 'https://api.yelp.com/v3/businesses/search?location=los%20angeles&attributes=hot_and_new&sort_by=best_match&limit=20';
@@ -32,9 +34,7 @@ const Home = () => {
         try{
             const response = await fetch(proxyURL, options);
             const data = await response.json();
-                console.log('home fetch', response)
             setRestaurant(data)
-            console.log("set" , setRestaurant(data))
         } catch(err) {
             console.log(err);
         }
@@ -43,7 +43,6 @@ const Home = () => {
     useEffect(() => {getRestaurants();}, []);
 
     if (restaurant) {
-        console.log("save" ,restaurant )
         return (
             <div className="home-card-wrapper">
 

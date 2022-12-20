@@ -1,10 +1,8 @@
 import './App.css';
 import Home from './Home';
 import NavBar from './NavBar';
-import SearchPage from './SearchPage_Yelp';
+import SearchPage from './SearchPage';
 import RestaurantPage from './RestaurantPage';
-import TestCarousel from './testcarousel';
-import Component from './Component';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -22,8 +20,6 @@ function App() {
         <Route path="/restaurantpage/:id/:name/:city/:state" element={<RestaurantPage />} />
         <Route path="/restaurantpage/:id/:name/:city/:state/:lat" element={<RestaurantPage />} />
         <Route path="/restaurantpage/:id/:name/:city/:state/:lat/:long" element={<RestaurantPage />} />
-        <Route path="/car" element={<TestCarousel />} />
-        <Route path="/component" element={<Component />} />
       </Routes>
       </div>
     </div>
