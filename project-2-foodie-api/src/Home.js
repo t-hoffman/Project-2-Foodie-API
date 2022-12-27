@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 
 import Carousel from "react-bootstrap/Carousel"
 
-const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
-
+const proxyURL = process.env.REACT_APP_PROXY_URL;
+console.log(proxyURL)
 const LA_URL = 'https://api.yelp.com/v3/businesses/search?location=los%20angeles&attributes=hot_and_new&sort_by=best_match&limit=20';
 
 const apiKey = process.env.REACT_APP_YELP_API_KEY;
