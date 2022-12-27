@@ -26,7 +26,11 @@ function fetchYelpData (url, cb) {
         }
     };
 
+<<<<<<< HEAD
     fetch ('https://us-central1-cors-proxy-ebc24.cloudfunctions.net/app', options)
+=======
+    fetch (process.env.REACT_APP_PROXY_URL, options)
+>>>>>>> 738e07137d49de79461ebe85681c7fba4108ea02
     .then (resp => resp.json())
     .then (json => cb (json))
     .catch (err => console.error(err));

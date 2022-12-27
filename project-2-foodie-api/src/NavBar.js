@@ -42,7 +42,7 @@ function SearchResults (props) {
 //     const { query } = props;
 //     const [data, setData] = useState(null);
 
-//     const proxyURL = 'https://thoffman-corsproxy.herokuapp.com/';
+//     const proxyURL = process.env.REACT_APP_PROXY_URL;
 //     const apiKey = process.env.REACT_APP_YELP_API_KEY;
 
 //     function fetchAutocomplete (url, cb) {
